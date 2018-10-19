@@ -14,9 +14,16 @@ public class SumController {
 
     @PostMapping(value = "/sum", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    SumResponse sum(@RequestBody SumRequest sumRequest) {
+    SumResponse sum(@RequestBody SumRequest sumRequest) throws NumberFormatException {
 
-        return new SumResponse((StringUtils.isEmpty(sumRequest.getNumber1())?0 :sumRequest.getNumber1()) +( StringUtils.isEmpty(sumRequest.getNumber2())?0 :sumRequest.getNumber2()));
+        Integer number1 = sumRequest.getNumber1();
+        Integer number2 = sumRequest.getNumber2();
+
+        if(number1<0 | number2 <0){
+            throw new NumberFormatException("Input fields are not correct");
+        }
+
+        return new SumResponse((StringUtils.isEmpty(number1)?0 :number1) +( StringUtils.isEmpty(number2)?0 :number2));
     }
 
 

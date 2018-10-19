@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -77,6 +78,23 @@ public class TdddemoApplicationTests {
             .andDo(print())
             .andExpect(status().isOk())
             .andExpect(MockMvcResultMatchers.content().json(expectedJsonContent));
+    }
+
+    @Test
+    public void givenSumAPIWithNegativeNumbers_whenMockMVC_thenResponseException() throws Exception {
+        Integer param1 = -1;
+        Integer param2 = -4;
+
+        final SumRequest request = new SumRequest(param1, param2);
+        final ObjectMapper mapper = new ObjectMapper();
+
+        final String jsonBodyRequest = mapper.writeValueAsString(request);
+        this.mockMvc.perform(post("/sum")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(jsonBodyRequest))
+            .andDo(print())
+            .andExpect(status().isInternalServerError())
+            .andExpect(content().string("java.lang.NumberFormatException:Input fields are not correct"));
     }
 
 }
