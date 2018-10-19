@@ -15,7 +15,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -93,8 +92,7 @@ public class TdddemoApplicationTests {
             .contentType(MediaType.APPLICATION_JSON)
             .content(jsonBodyRequest))
             .andDo(print())
-            .andExpect(status().isInternalServerError())
-            .andExpect(content().string("java.lang.NumberFormatException:Input fields are not correct"));
+            .andExpect(status().isBadRequest());
     }
 
 }

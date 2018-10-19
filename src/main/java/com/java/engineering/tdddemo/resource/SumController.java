@@ -3,6 +3,7 @@ package com.java.engineering.tdddemo.resource;
 import com.java.engineering.tdddemo.model.SumRequest;
 import com.java.engineering.tdddemo.model.SumResponse;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,16 +15,17 @@ public class SumController {
 
     @PostMapping(value = "/sum", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    SumResponse sum(@RequestBody SumRequest sumRequest) throws NumberFormatException {
+    ResponseEntity sum(@RequestBody SumRequest sumRequest) {
 
         Integer number1 = sumRequest.getNumber1();
         Integer number2 = sumRequest.getNumber2();
 
-        if(number1<0 | number2 <0){
-            throw new NumberFormatException("Input fields are not correct");
+
+        if (!StringUtils.isEmpty(number1) && number1 < 0 || !StringUtils.isEmpty(number2)&& number2 < 0) {
+            return ResponseEntity.badRequest().build();
         }
 
-        return new SumResponse((StringUtils.isEmpty(number1)?0 :number1) +( StringUtils.isEmpty(number2)?0 :number2));
+        return ResponseEntity.ok(new SumResponse((StringUtils.isEmpty(number1) ? 0 : number1) + (StringUtils.isEmpty(number2) ? 0 : number2)));
     }
 
 
