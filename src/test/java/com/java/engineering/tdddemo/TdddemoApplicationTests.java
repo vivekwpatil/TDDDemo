@@ -61,4 +61,22 @@ public class TdddemoApplicationTests {
             .andExpect(MockMvcResultMatchers.content().json(expectedJsonContent));
     }
 
+    @Test
+    public void givenSumAPIWithSingleNumber_whenMockMVC_thenResponseSameValue() throws Exception {
+
+        Integer param1 = 1;
+
+        final SumRequest request = new SumRequest(param1, null);
+        final ObjectMapper mapper = new ObjectMapper();
+
+        final String jsonBodyRequest = mapper.writeValueAsString(request);
+        final String expectedJsonContent = mapper.writeValueAsString(new SumResponse(param1));
+        this.mockMvc.perform(post("/sum")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(jsonBodyRequest))
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(MockMvcResultMatchers.content().json(expectedJsonContent));
+    }
+
 }
