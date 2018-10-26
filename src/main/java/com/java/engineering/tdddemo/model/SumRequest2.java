@@ -9,6 +9,7 @@ public class SumRequest2 implements Serializable {
     @Pattern( regexp = "^0*([0-9]|[1-8][0-9]|9[0-9]|[1-8][0-9]{2}|9[0-8][0-9]|99[0-9])$", message = "Size must be between 0 and 999")
     private String number1;
     @NotNull(message = "must not be null")
+    @Pattern( regexp = "^0*([0-9]|[1-8][0-9]|9[0-9]|[1-8][0-9]{2}|9[0-8][0-9]|99[0-9])$", message = "Size must be between 0 and 999")
     private String number2;
 
     public SumRequest2() {
