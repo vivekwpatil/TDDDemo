@@ -44,5 +44,16 @@ public class SumRequest2Test {
         assertEquals("Size must be between 0 and 999", constraintViolations.iterator().next().getMessage());
     }
 
+    @Test
+    public void givenWithNegativeNumbersThenResponseValidationError() {
+        SumRequest2 request = new SumRequest2("-3", "10");
+
+        Set<ConstraintViolation<SumRequest2>> constraintViolations =
+            validator.validate(request);
+
+        assertEquals(1, constraintViolations.size());
+        assertEquals("Size must be between 0 and 999", constraintViolations.iterator().next().getMessage());
+    }
+
 }
 
