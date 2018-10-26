@@ -29,7 +29,7 @@ public class SumRequest2Test {
         Set<ConstraintViolation<SumRequest2>> constraintViolations =
             validator.validate(request);
 
-        assertEquals(1, constraintViolations.size());
+        assertEquals(2, constraintViolations.size());
         assertEquals("must not be null", constraintViolations.iterator().next().getMessage());
     }
 

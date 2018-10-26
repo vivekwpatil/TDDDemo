@@ -1,9 +1,12 @@
 package com.java.engineering.tdddemo.model;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 public class SumRequest2 implements Serializable {
+    @NotNull(message = "must not be null")
     private String number1;
+    @NotNull(message = "must not be null")
     private String number2;
 
     public SumRequest2() {
